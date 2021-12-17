@@ -1,0 +1,12 @@
+.DS_Store
+
+node_modules/*
+custom/*
+
+coverage/*
+
+nbproject/*
+dist/
+
+# generated typedocs
+docs/api

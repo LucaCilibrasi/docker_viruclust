@@ -1,0 +1,26 @@
+services:
+  app:
+#    build: .
+    image: lucacilibrasi/viruclust
+    command: python -u ./backend/app.py ${FILE_NAME}
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/backend/app
+      - ${FILE_PATH}:/backend/app/database
+    links:
+      - db
+    environment:
+      - FILE_PATH=${FILE_PATH}
+      - FILE_NAME=${FILE_NAME}
+  db:
+    image: mongo:latest
+    hostname: test_mongodb
+    environment:
+      - MONGO_INITDB_DATABASE=viruclust_db
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=pass
+    volumes:
+      - ./init-db.py:/docker-entrypoint-initdb.d/init-db.py:ro
+    ports:
+      - 27017:27017
